@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="一份可以慢慢挑选的宁波目的地灵感地图。景点、美食和真实用户评价都附有来源。">
+  <title>嘉年华行 · Joy推荐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="wordmark" href="#top" aria-label="回到页面顶部">嘉年华行 · Joy推荐 <span>✳</span></a>
+    <nav aria-label="页面导航"><a href="#map-section">地图</a><a href="#sights">去哪里</a><a href="#food">吃什么</a></nav>
+  </header>
+  <main id="top">
+    <section class="intro">
+      <div class="intro-lockup">
+        <div class="intro-title">
+          <p class="eyebrow">JOY'S NINGBO PICKS · 2026 秋</p>
+          <h1 class="intro-lead">嘉悦will watching you，著作权归嘉悦所有，禁止白嫖</h1>
+        </div>
+        <figure class="joy-portrait"><img src="assets/user-photos/joy-watching.jpg" alt="嘉悦的搞怪监视员封面照片"><figcaption>嘉悦监视员 · 在线</figcaption></figure>
+      </div>
+      <div class="intro-foot"><span><i class="dot dot-sight"></i> 10 个散步灵感</span><span><i class="dot dot-food"></i> 10 家餐馆 · 5 款下午茶灵感</span><span class="source-note">内容附来源 · 图片可回原平台查看</span></div>
+    </section>
+
+    <section class="map-section section-wrap" id="map-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / 先看看它们在哪</p><h2>宁波地图 <span>· 城区到近郊</span></h2></div>
+        <div class="map-key"><span><i class="dot dot-sight"></i> 景点</span><span><i class="dot dot-food"></i> 吃饭</span></div>
+      </div>
+      <div class="map-frame">
+        <div id="map" role="img" aria-label="宁波景点和餐厅位置地图"></div>
+        <div class="map-loading" id="map-fallback">地图底图加载中；地点卡片仍可直接浏览。</div>
+      </div>
+      <p class="map-caption"><span>点地图上的圆点，打开地点小档案</span><span>底图 © OpenStreetMap contributors</span></p>
+      <div class="map-legend"><span>从杭州湾沿岸</span><b>宁波市区</b><span>到象山海边 <i>↘</i></span></div>
+    </section>
+
+    <section class="section-wrap places-section" id="sights">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / 看看喜欢哪一种宁波</p><h2>散步与看海 <span>· 10 个地方</span></h2></div>
+        <p class="section-aside">老城、湖边、山海都有<br>不必一次逛完</p>
+      </div>
+      <div class="cards-grid" id="sight-cards"></div>
+    </section>
+
+    <section class="food-section" id="food">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">03 / 把胃也留给宁波</p><h2>本地味道 <span>· 10 家餐馆</span></h2></div>
+          <p class="section-aside">海鲜、汤圆、面<br>优缺点尽量照实说</p>
+        </div>
+        <div class="food-intro"><span class="food-stamp">鲜</span><p>按能在大众点评公开页面核实的评分从高到低排；无法确认大众点评分数的店放在后面并标明待核实。餐厅图片各不相同，点图可打开对应小红书原帖。</p></div>
+        <div class="cards-grid food-grid" id="food-cards"></div>
+        <div class="section-heading treats-heading">
+          <div><p class="eyebrow">04 / 走累了，喝一杯吃点甜</p><h2>饮品与甜点 <span>· Joy 的小收藏</span></h2></div>
+          <p class="section-aside">奶茶、咖啡、蛋糕<br>留一点下午茶时间</p>
+        </div>
+        <p class="treats-note">吴记港奶附小红书实拍，缸鸭狗附大众点评用户图；岩野、毛竹咖啡、好野已加入你提供的实拍拼图，并在图片上标明来源。</p>
+        <div class="cards-grid food-grid treat-grid" id="treat-cards"></div>
+      </div>
+    </section>
+    <footer class="footer"><span>嘉年华行 · Joy推荐</span><p>预约、交通和营业信息可能变化；出发前请点开官方页面或地图商户页确认。图片来自笔记作者公开发布的小红书封面，署名并链接回原帖，仅供私人旅行参考。</p></footer>
+  </main>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="detail-drawer" id="detail-drawer" aria-hidden="true" aria-labelledby="drawer-title">
+    <button class="drawer-close" id="drawer-close" aria-label="关闭详情">×</button>
+    <div class="drawer-content" id="drawer-content"></div>
+  </aside>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
