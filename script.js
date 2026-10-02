@@ -127,8 +127,21 @@ document.querySelectorAll('.place-card').forEach(el=>{el.addEventListener('click
 {
  const map=document.querySelector('#map');
  const markers=document.querySelector('#map-markers');
+ const satellite=document.querySelector('#satellite-layer');
  const entries=[...sights.map((item,index)=>({item,type:'sight',index:index+1})),...restaurants.map((item,index)=>({item,type:'food',index:index+1}))];
- const project=({lat,lng})=>({x:((lng-121.08)/(122-121.08))*100,y:((30.52-lat)/(30.52-29.10))*100});
+ const bounds={west:121.08,east:122,south:29.10,north:30.52};
+ const tilePosition=({lat,lng},zoom)=>{const scale=2**zoom,rad=lat*Math.PI/180;return{x:(lng+180)/360*scale,y:(1-Math.log(Math.tan(Math.PI/4+rad/2))/Math.PI)/2*scale};};
+ const topLeft=tilePosition({lat:bounds.north,lng:bounds.west},10),bottomRight=tilePosition({lat:bounds.south,lng:bounds.east},10);
+ const spanX=(bottomRight.x-topLeft.x)*256,spanY=(bottomRight.y-topLeft.y)*256;
+ const project=({lat,lng})=>{const p=tilePosition({lat,lng},10);return{x:((p.x-topLeft.x)*256/spanX)*100,y:((p.y-topLeft.y)*256/spanY)*100};};
+ // Esri World Imagery is loaded as ordinary web tiles. The embedded local map
+ // stays underneath as a dependable fallback when an environment blocks tiles.
+ const minTileX=Math.floor(topLeft.x),maxTileX=Math.ceil(bottomRight.x)-1,minTileY=Math.floor(topLeft.y),maxTileY=Math.ceil(bottomRight.y)-1;
+ for(let ty=minTileY;ty<=maxTileY;ty++)for(let tx=minTileX;tx<=maxTileX;tx++){
+   const image=document.createElement('img');image.className='satellite-tile';image.alt='';image.draggable=false;image.decoding='async';image.src=`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/10/${ty}/${tx}`;
+   image.style.left=`${((tx*256-topLeft.x*256)/spanX*100).toFixed(3)}%`;image.style.top=`${((ty*256-topLeft.y*256)/spanY*100).toFixed(3)}%`;image.style.width=`${(256/spanX*100).toFixed(3)}%`;image.style.height=`${(256/spanY*100).toFixed(3)}%`;
+   image.addEventListener('load',()=>satellite.classList.add('tiles-loaded'),{once:true});satellite.appendChild(image);
+ }
  // Nudge close pins apart by a few screen pixels so downtown targets stay tappable.
  markers.innerHTML=entries.map(entry=>`<button class="map-marker ${entry.type}" type="button" data-id="${esc(entry.item.id)}" data-type="${entry.type}" aria-label="打开${entry.type==='sight'?'景点':'餐厅'}：${esc(entry.item.name)}" title="${esc(entry.item.name)}"><span>${entry.index}</span></button>`).join('');
  markers.querySelectorAll('.map-marker').forEach(button=>button.addEventListener('click',()=>openDetail(button.dataset.id,button.dataset.type)));
@@ -149,7 +162,7 @@ document.querySelectorAll('.place-card').forEach(el=>{el.addEventListener('click
  }
  positionMarkers();window.addEventListener('resize',positionMarkers,{passive:true});
  const key=document.querySelector('.map-key');
- const toggle=document.createElement('button'); toggle.className='map-toggle';toggle.type='button';toggle.setAttribute('aria-pressed','false');toggle.innerHTML='<i class="dot dot-food"></i> 餐厅点位';
+ const toggle=document.createElement('button'); toggle.className='map-toggle';toggle.type='button';toggle.setAttribute('aria-pressed','true');toggle.innerHTML='<i class="dot dot-food"></i> 餐厅点位';
  toggle.addEventListener('click',()=>{const on=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(on));markers.classList.toggle('hide-food',!on);});
  key.appendChild(toggle);
 }
