@@ -122,34 +122,36 @@ document.querySelector('#drawer-close').addEventListener('click',closeDetail); b
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
 document.querySelectorAll('.place-card').forEach(el=>{el.addEventListener('click',()=>openDetail(el.dataset.id,el.dataset.type));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDetail(el.dataset.id,el.dataset.type);}})});
 
-/* One fixed region; all navigation and zoom gestures are intentionally disabled. */
-if(window.L){
- const map=L.map('map',{zoomControl:false,scrollWheelZoom:false,doubleClickZoom:false,dragging:false,boxZoom:false,keyboard:false,touchZoom:false,zoomSnap:.25,attributionControl:true});
- L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
- const bounds=L.latLngBounds([[29.10,121.10],[30.50,122.00]]);
- map.fitBounds(bounds,{padding:[12,12]});
- const makeCluster=(kind)=>L.markerClusterGroup({
-   showCoverageOnHover:false,zoomToBoundsOnClick:false,spiderfyOnEveryZoom:true,
-   iconCreateFunction:cluster=>L.divIcon({className:'',html:`<div class="pin-cluster ${kind}"><span>${cluster.getChildCount()}</span></div>`,iconSize:[34,34]})
- });
- const sightLayer=makeCluster('sight').addTo(map),foodLayer=makeCluster('food');
- function marker(item,type,index,layer){
-   const icon=L.divIcon({className:'',html:`<div class="pin ${type}"><span>${index}</span></div>`,iconSize:[28,32],iconAnchor:[10,28],popupAnchor:[4,-25]});
-   const mark=L.marker([item.lat,item.lng],{icon,keyboard:true,title:item.name}).addTo(layer);
-   mark.on('click',()=>openDetail(item.id,type));
+/* Offline-first map: local SVG basemap plus local, accessible buttons. No map SDK,
+   external tile server, canvas, or device-specific permission is needed. */
+{
+ const map=document.querySelector('#map');
+ const markers=document.querySelector('#map-markers');
+ const entries=[...sights.map((item,index)=>({item,type:'sight',index:index+1})),...restaurants.map((item,index)=>({item,type:'food',index:index+1}))];
+ const project=({lat,lng})=>({x:((lng-121.08)/(122-121.08))*100,y:((30.52-lat)/(30.52-29.10))*100});
+ // Nudge close pins apart by a few screen pixels so downtown targets stay tappable.
+ markers.innerHTML=entries.map(entry=>`<button class="map-marker ${entry.type}" type="button" data-id="${esc(entry.item.id)}" data-type="${entry.type}" aria-label="打开${entry.type==='sight'?'景点':'餐厅'}：${esc(entry.item.name)}" title="${esc(entry.item.name)}"><span>${entry.index}</span></button>`).join('');
+ markers.querySelectorAll('.map-marker').forEach(button=>button.addEventListener('click',()=>openDetail(button.dataset.id,button.dataset.type)));
+ function positionMarkers(){
+   const rect=map.getBoundingClientRect();if(!rect.width||!rect.height)return;
+   const scaleX=rect.width/100,scaleY=rect.height/100,minGap=28;
+   const layout=entries.map(entry=>({entry,...project(entry.item)}));
+   for(let pass=0;pass<160;pass++){
+     let changed=false;
+     for(let i=0;i<layout.length;i++)for(let j=i+1;j<layout.length;j++){
+       const a=layout[i],b=layout[j],dx=(b.x-a.x)*scaleX,dy=(b.y-a.y)*scaleY,d=Math.hypot(dx,dy);
+       if(d>0&&d<minGap){const shift=(minGap-d)/2+0.08,nx=dx/d,ny=dy/d;a.x-=nx*shift/scaleX;a.y-=ny*shift/scaleY;b.x+=nx*shift/scaleX;b.y+=ny*shift/scaleY;changed=true;}
+     }
+     layout.forEach(p=>{p.x=Math.max(2.2,Math.min(97.8,p.x));p.y=Math.max(4,Math.min(96,p.y));});
+     if(!changed)break;
+   }
+   layout.forEach(({entry,x,y})=>{const button=markers.querySelector(`[data-id="${CSS.escape(entry.item.id)}"][data-type="${entry.type}"]`);if(button){button.style.left=`${x.toFixed(2)}%`;button.style.top=`${y.toFixed(2)}%`;}});
  }
- sights.forEach((d,i)=>marker(d,'sight',i+1,sightLayer));
- restaurants.forEach((d,i)=>marker(d,'food',i+1,foodLayer));
- [sightLayer,foodLayer].forEach(layer=>layer.on('clusterclick',event=>event.layer.spiderfy()));
- // Food markers can be turned on/off from the legend without exposing map zoom.
+ positionMarkers();window.addEventListener('resize',positionMarkers,{passive:true});
  const key=document.querySelector('.map-key');
  const toggle=document.createElement('button'); toggle.className='map-toggle';toggle.type='button';toggle.setAttribute('aria-pressed','false');toggle.innerHTML='<i class="dot dot-food"></i> 餐厅点位';
- toggle.addEventListener('click',()=>{const on=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(on));if(on)foodLayer.addTo(map);else map.removeLayer(foodLayer);});
+ toggle.addEventListener('click',()=>{const on=toggle.getAttribute('aria-pressed')!=='true';toggle.setAttribute('aria-pressed',String(on));markers.classList.toggle('hide-food',!on);});
  key.appendChild(toggle);
- document.querySelector('#map-fallback').hidden=true;
- map.whenReady(()=>setTimeout(()=>map.invalidateSize(),100));
-}else{
- document.querySelector('#map-fallback').textContent='地图底图暂不可用；下方地点卡片仍可打开详情与导航链接。';
 }
 
 const localTreats = [

@@ -9,9 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -37,10 +34,12 @@
         <div class="map-key"><span><i class="dot dot-sight"></i> 景点</span><span><i class="dot dot-food"></i> 吃饭</span></div>
       </div>
       <div class="map-frame">
-        <div id="map" role="img" aria-label="宁波景点和餐厅位置地图"></div>
-        <div class="map-loading" id="map-fallback">地图底图加载中；地点卡片仍可直接浏览。</div>
+        <div id="map" role="group" aria-label="宁波目的地示意地图">
+          <img class="map-artwork" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDYyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InRpdGxlIGRlc2MiPgogIDx0aXRsZSBpZD0idGl0bGUiPuWugeazouW4guWMuuS4jui/kemDiuebrueahOWcsOekuuaEj+WbvjwvdGl0bGU+CiAgPGRlc2MgaWQ9ImRlc2MiPuWxleekuuadreW3nua5vuOAgeaFiOa6quOAgeS9meWnmuOAgeWugeazouW4guWMuuOAgeS4nOmSsea5luOAgea6quWPo+OAgeWugea1t+S4juixoeWxseaWueWQkeOAgueCueS9jeeUsee9kemhteWPpuihjOimhuebluOAgjwvZGVzYz4KICA8ZGVmcz4KICAgIDxwYXR0ZXJuIGlkPSJncmFpbiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPGNpcmNsZSBjeD0iNCIgY3k9IjciIHI9Ii44IiBmaWxsPSIjZDhkMmJjIiBvcGFjaXR5PSIuMTAiLz48Y2lyY2xlIGN4PSIyMSIgY3k9IjE4IiByPSIuNyIgZmlsbD0iI2Q4ZDJiYyIgb3BhY2l0eT0iLjA4Ii8+CiAgICA8L3BhdHRlcm4+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InNlYSIgeDI9IjAiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjMWIyOTI4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjAzMzMyIi8+PC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMDAiIGhlaWdodD0iNjIwIiBmaWxsPSJ1cmwoI3NlYSkiLz4KICA8cGF0aCBkPSJNMCAwaDc0MGMzMiAyOCA0MiA2NyAyMyA5OC0xOCAyOS0xMSA1MCAxOSA3MCAyNyAxOCAzMiA0NyAxMSA3My0xOCAyMy0xMiA0OCAxNiA2OSAyNiAyMCAyOSA0OCA4IDczLTIwIDI1LTExIDQ5IDIxIDcxIDI4IDE5IDMzIDQ2IDE1IDcxLTE0IDE5LTkgNDIgMTcgNjIgMTcgMTMgMjkgMjQgMzggMzNIMFoiIGZpbGw9IiMyOTM2MzAiLz4KICA8cGF0aCBkPSJNMCAwaDc0MGMzMiAyOCA0MiA2NyAyMyA5OC0xOCAyOS0xMSA1MCAxOSA3MCAyNyAxOCAzMiA0NyAxMSA3My0xOCAyMy0xMiA0OCAxNiA2OSAyNiAyMCAyOSA0OCA4IDczLTIwIDI1LTExIDQ5IDIxIDcxIDI4IDE5IDMzIDQ2IDE1IDcxLTE0IDE5LTkgNDIgMTcgNjIgMTcgMTMgMjkgMjQgMzggMzNIMFoiIGZpbGw9InVybCgjZ3JhaW4pIi8+CiAgPCEtLSByZWdpb25hbCB3YXRlciBhbmQgcml2ZXIgYnJhbmNoZXMgLS0+CiAgPHBhdGggZD0iTTUzNSAxODhjLTEyIDQ4LTIxIDc3LTE0IDEwNyA4IDMxIDM1IDM1IDMxIDY1LTUgMzEtNDAgNDYtNTMgNzctMTQgMzMtMTAgNzggMTUgMTM3IiBmaWxsPSJub25lIiBzdHJva2U9IiM1Mzc0NmMiIHN0cm9rZS13aWR0aD0iOSIgb3BhY2l0eT0iLjY4Ii8+CiAgPHBhdGggZD0iTTU1MSAyNjhjLTU0IDEwLTk2IDI4LTEzMyA1Ni0zMSAyNC01NCA1OC04OCA3NU01NTAgMjk2YzYxLTEgMTAzIDE2IDEzOSA0MyAyOSAyMiA0OCA1NSA4OCA3M000OTkgNDM5Yy0zOSAxOS03MyA0Mi0xMDMgNzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ2NjY1ZiIgc3Ryb2tlLXdpZHRoPSI1IiBvcGFjaXR5PSIuNzIiLz4KICA8IS0tIG1haW4gcm9hZHMgLS0+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjVhNzdmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iLjU1Ij4KICAgIDxwYXRoIGQ9Ik0xMDUgOTFjMTEyIDUyIDIxNCA5NyAzMjYgMTUzIDQ0IDIyIDg0IDQ4IDExOSA3OCA1NyA0OSA5MSA5OSAxMjIgMTYyIi8+CiAgICA8cGF0aCBkPSJNMjEwIDIxM2M4OCA0MCAxNTQgNjkgMjQ2IDk0IDcwIDE5IDEzNSAyOCAyMzEgMjIiLz4KICAgIDxwYXRoIGQ9Ik0yNDAgNDE3Yzg3LTQ1IDE4NS02MSAyODItNTAgOTAgMTEgMTcyIDQ5IDI2MSAxMDciLz4KICAgIDxwYXRoIGQ9Ik0zOTUgNTE2Yzc5LTY0IDEzOS0xMTEgMTk1LTE1NSA5My03MyAxODQtMTI1IDI5OS0xNzgiLz4KICAgIDxwYXRoIGQ9Ik0xMDIgOTJjMTkgMTAwIDM4IDE5MyA3MiAyNzggMzAgNzcgNzMgMTMyIDE1MSAxNzQiLz4KICA8L2c+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZGVkNGI1IiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIuMzIiPgogICAgPHBhdGggZD0iTTEwNSA5MWMxMTIgNTIgMjE0IDk3IDMyNiAxNTMgNDQgMjIgODQgNDggMTE5IDc4IDU3IDQ5IDkxIDk5IDEyMiAxNjIiLz4KICAgIDxwYXRoIGQ9Ik0yMTAgMjEzYzg4IDQwIDE1NCA2OSAyNDYgOTQgNzAgMTkgMTM1IDI4IDIzMSAyMiIvPgogICAgPHBhdGggZD0iTTI0MCA0MTdjODctNDUgMTg1LTYxIDI4Mi01MCA5MCAxMSAxNzIgNDkgMjYxIDEwNyIvPgogIDwvZz4KICA8IS0tIHRvd24gcmVmZXJlbmNlcyBwb3NpdGlvbmVkIHRvIG1hdGNoIG1hcmtlciBwcm9qZWN0aW9uIC0tPgogIDxnIGZvbnQtZmFtaWx5PSJzeXN0ZW0tdWksICdNaWNyb3NvZnQgWWFIZWknLCBzYW5zLXNlcmlmIiBmaWxsPSIjZDlkN2M5IiBvcGFjaXR5PSIuOSI+CiAgICA8dGV4dCB4PSIzNSIgeT0iMzEiIGZvbnQtc2l6ZT0iMTUiIGxldHRlci1zcGFjaW5nPSIzIj7mna3lt57mub48L3RleHQ+CiAgICA8dGV4dCB4PSIzNiIgeT0iNTUiIGZvbnQtc2l6ZT0iMTMiPua1t+WkqeS4gOa0sjwvdGV4dD4KICAgIDx0ZXh0IHg9IjE2MiIgeT0iMTUxIiBmb250LXNpemU9IjE1Ij7mhYjmuqo8L3RleHQ+CiAgICA8dGV4dCB4PSIzODAiIHk9IjIxMSIgZm9udC1zaXplPSIxNCI+5oWI5Z+OPC90ZXh0PgogICAgPHRleHQgeD0iNDc1IiB5PSIyNzMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI2MDAiPuWugeazouW4guWMujwvdGV4dD4KICAgIDx0ZXh0IHg9IjU3OCIgeT0iMzI2IiBmb250LXNpemU9IjE0Ij7kuJzpkrHmuZY8L3RleHQ+CiAgICA8dGV4dCB4PSI3MzUiIHk9IjMwNyIgZm9udC1zaXplPSIxMyI+5aSp56ulPC90ZXh0PgogICAgPHRleHQgeD0iMTg3IiB5PSIzNTUiIGZvbnQtc2l6ZT0iMTQiPua6quWPozwvdGV4dD4KICAgIDx0ZXh0IHg9IjM1MCIgeT0iNTg5IiBmb250LXNpemU9IjE0Ij7lroHmtbcgwrcg5YmN56ulPC90ZXh0PgogICAgPHRleHQgeD0iODU4IiB5PSI1ODYiIGZvbnQtc2l6ZT0iMTQiPuixoeWxsSDCtyDnn7PmtaY8L3RleHQ+CiAgPC9nPgogIDxnIGZpbGw9IiNlZmI0OGYiIG9wYWNpdHk9Ii44Ij4KICAgIDxjaXJjbGUgY3g9IjYzIiBjeT0iMjgiIHI9IjMiLz48Y2lyY2xlIGN4PSIxODEiIGN5PSIxNTUiIHI9IjMiLz48Y2lyY2xlIGN4PSI0MDMiIGN5PSIyMTgiIHI9IjMiLz4KICAgIDxjaXJjbGUgY3g9IjUxMSIgY3k9IjI4MCIgcj0iNCIvPjxjaXJjbGUgY3g9IjYwNyIgY3k9IjMzMSIgcj0iMyIvPjxjaXJjbGUgY3g9Ijc1NSIgY3k9IjMxMSIgcj0iMyIvPgogICAgPGNpcmNsZSBjeD0iMjE1IiBjeT0iMzYyIiByPSIzIi8+PGNpcmNsZSBjeD0iMzgwIiBjeT0iNTg0IiByPSIzIi8+PGNpcmNsZSBjeD0iOTQyIiBjeT0iNTczIiByPSIzIi8+CiAgPC9nPgogIDx0ZXh0IHg9Ijk3MCIgeT0iNTk0IiB0ZXh0LWFuY2hvcj0iZW5kIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjEwIiBmaWxsPSIjOTRhYWEwIiBvcGFjaXR5PSIuOCI+5a6B5rOi5Yy65Z+f5L2N572u56S65oSPIMK3IOmdnuWvvOiIqui3r+e9kTwvdGV4dD4KPC9zdmc+Cg==" alt="宁波市区、近郊及远郊示意地图">
+          <div class="map-markers hide-food" id="map-markers" aria-label="可点击的景点和餐厅标记"></div>
+        </div>
       </div>
-      <p class="map-caption"><span>点地图上的圆点，打开地点小档案</span><span>底图 © OpenStreetMap contributors</span></p>
+      <p class="map-caption"><span>点地图上的圆点，打开地点小档案</span><span>固定示意图 · 导航请点详情里的高德地图</span></p>
       <div class="map-legend"><span>从杭州湾沿岸</span><b>宁波市区</b><span>到象山海边 <i>↘</i></span></div>
     </section>
 
@@ -76,8 +75,6 @@
     <button class="drawer-close" id="drawer-close" aria-label="关闭详情">×</button>
     <div class="drawer-content" id="drawer-content"></div>
   </aside>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

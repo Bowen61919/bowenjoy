@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" role="img" aria-labelledby="title desc">
+  <title id="title">宁波市区与近郊目的地示意图</title>
+  <desc id="desc">展示杭州湾、慈溪、余姚、宁波市区、东钱湖、溪口、宁海与象山方向。点位由网页另行覆盖。</desc>
+  <defs>
+    <pattern id="grain" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="7" r=".8" fill="#d8d2bc" opacity=".10"/><circle cx="21" cy="18" r=".7" fill="#d8d2bc" opacity=".08"/>
+    </pattern>
+    <linearGradient id="sea" x2="0" y2="1"><stop stop-color="#1b2928"/><stop offset="1" stop-color="#203332"/></linearGradient>
+  </defs>
+  <rect width="1000" height="620" fill="url(#sea)"/>
+  <path d="M0 0h740c32 28 42 67 23 98-18 29-11 50 19 70 27 18 32 47 11 73-18 23-12 48 16 69 26 20 29 48 8 73-20 25-11 49 21 71 28 19 33 46 15 71-14 19-9 42 17 62 17 13 29 24 38 33H0Z" fill="#293630"/>
+  <path d="M0 0h740c32 28 42 67 23 98-18 29-11 50 19 70 27 18 32 47 11 73-18 23-12 48 16 69 26 20 29 48 8 73-20 25-11 49 21 71 28 19 33 46 15 71-14 19-9 42 17 62 17 13 29 24 38 33H0Z" fill="url(#grain)"/>
+  <!-- regional water and river branches -->
+  <path d="M535 188c-12 48-21 77-14 107 8 31 35 35 31 65-5 31-40 46-53 77-14 33-10 78 15 137" fill="none" stroke="#53746c" stroke-width="9" opacity=".68"/>
+  <path d="M551 268c-54 10-96 28-133 56-31 24-54 58-88 75M550 296c61-1 103 16 139 43 29 22 48 55 88 73M499 439c-39 19-73 42-103 74" fill="none" stroke="#46665f" stroke-width="5" opacity=".72"/>
+  <!-- main roads -->
+  <g fill="none" stroke="#b5a77f" stroke-width="3" stroke-linecap="round" opacity=".55">
+    <path d="M105 91c112 52 214 97 326 153 44 22 84 48 119 78 57 49 91 99 122 162"/>
+    <path d="M210 213c88 40 154 69 246 94 70 19 135 28 231 22"/>
+    <path d="M240 417c87-45 185-61 282-50 90 11 172 49 261 107"/>
+    <path d="M395 516c79-64 139-111 195-155 93-73 184-125 299-178"/>
+    <path d="M102 92c19 100 38 193 72 278 30 77 73 132 151 174"/>
+  </g>
+  <g fill="none" stroke="#ded4b5" stroke-width="1.2" stroke-linecap="round" opacity=".32">
+    <path d="M105 91c112 52 214 97 326 153 44 22 84 48 119 78 57 49 91 99 122 162"/>
+    <path d="M210 213c88 40 154 69 246 94 70 19 135 28 231 22"/>
+    <path d="M240 417c87-45 185-61 282-50 90 11 172 49 261 107"/>
+  </g>
+  <!-- town references positioned to match marker projection -->
+  <g font-family="system-ui, 'Microsoft YaHei', sans-serif" fill="#d9d7c9" opacity=".9">
+    <text x="35" y="31" font-size="15" letter-spacing="3">杭州湾</text>
+    <text x="36" y="55" font-size="13">海天一洲</text>
+    <text x="162" y="151" font-size="15">慈溪</text>
+    <text x="380" y="211" font-size="14">慈城</text>
+    <text x="475" y="273" font-size="18" font-weight="600">宁波市区</text>
+    <text x="578" y="326" font-size="14">东钱湖</text>
+    <text x="735" y="307" font-size="13">天童</text>
+    <text x="187" y="355" font-size="14">溪口</text>
+    <text x="350" y="589" font-size="14">宁海 · 前童</text>
+    <text x="858" y="586" font-size="14">象山 · 石浦</text>
+  </g>
+  <g fill="#efb48f" opacity=".8">
+    <circle cx="63" cy="28" r="3"/><circle cx="181" cy="155" r="3"/><circle cx="403" cy="218" r="3"/>
+    <circle cx="511" cy="280" r="4"/><circle cx="607" cy="331" r="3"/><circle cx="755" cy="311" r="3"/>
+    <circle cx="215" cy="362" r="3"/><circle cx="380" cy="584" r="3"/><circle cx="942" cy="573" r="3"/>
+  </g>
+  <text x="970" y="594" text-anchor="end" font-family="system-ui, sans-serif" font-size="10" fill="#94aaa0" opacity=".8">宁波区域位置示意 · 非导航路网</text>
+</svg>
